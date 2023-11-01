@@ -1,5 +1,5 @@
 {
-  description = "chisel playground";
+  description = "%NAME%";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
