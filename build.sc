@@ -3,12 +3,12 @@ import scalalib._
 
 val defaultScalaVersion = "2.13.12"
 
-val chiselVersion = "6.0.0-RC1"
-val chiselTestVersion = "5.0.2"
+val chiselVersion     = "6.0.0-RC1"
+val chiseltestVersion = "5.0.2"
 
 val chiselIvy       = ivy"org.chipsalliance::chisel:$chiselVersion"
 val chiselPluginIvy = ivy"org.chipsalliance:::chisel-plugin:$chiselVersion"
-val chiselTestIvy   = ivy"edu.berkeley.cs::chiseltest:$chiseltestVersion"
+val chiseltestIvy   = ivy"edu.berkeley.cs::chiseltest:$chiseltestVersion"
 
 object %NAME% extends HasChiselTest with scalafmt.ScalafmtModule {
   override def millSourcePath = os.pwd / "hdl" / "chisel"
@@ -39,6 +39,6 @@ trait HasChisel extends ScalaModule {
 
 trait HasChiselTest extends HasChisel {
   object test extends ScalaTests with TestModule.ScalaTest {
-    def ivyDeps = super.ivyDeps() ++ Agg(chiselTestIvy)
+    def ivyDeps = super.ivyDeps() ++ Agg(chiseltestIvy)
   }
 }
