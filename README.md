@@ -3,5 +3,5 @@
 ### Generate SystemVerilog
 
 ```bash
-$ nix develop -c mill %NAME%.runMain %NAME%.CodeGen
+$ nix develop -c mill %NAME%.runMain %NAME%.EmitVerilog
 ```

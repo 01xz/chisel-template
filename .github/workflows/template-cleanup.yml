@@ -25,7 +25,7 @@ jobs:
           NAME="${GITHUB_REPOSITORY##*/}"
 
           # Replace placeholders
-          sed -i "s/%NAME%/$NAME/g" src/main/scala/CodeGen.scala build.sc flake.nix README.md
+          sed -i "s/%NAME%/$NAME/g" hdl/chisel/src/EmitVerilog.scala build.sc flake.nix README.md
 
           rm -rf \
             .github/workflows/template-cleanup.yml \

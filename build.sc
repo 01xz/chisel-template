@@ -1,32 +1,44 @@
 import mill._
 import scalalib._
 
-val chiselVersion     = "6.0.0-M3"
-val chiseltestVersion = "5.0.2"
+val defaultScalaVersion = "2.13.12"
 
-object %NAME% extends SbtModule with scalafmt.ScalafmtModule {
-  def millSourcePath = os.pwd
+val chiselVersion = "6.0.0-RC1"
+val chiselTestVersion = "5.0.2"
 
-  def scalaVersion = "2.13.10"
+val chiselIvy       = ivy"org.chipsalliance::chisel:$chiselVersion"
+val chiselPluginIvy = ivy"org.chipsalliance:::chisel-plugin:$chiselVersion"
+val chiselTestIvy   = ivy"edu.berkeley.cs::chiseltest:$chiseltestVersion"
 
-  def scalacOptions = Seq(
-    "-language:reflectiveCalls",
+object %NAME% extends HasChiselTest with scalafmt.ScalafmtModule {
+  override def millSourcePath = os.pwd / "hdl" / "chisel"
+  override def moduleDeps = super.moduleDeps ++ Seq(
+    // deps
+  )
+}
+
+trait HasChisel extends ScalaModule {
+  override def scalaVersion = defaultScalaVersion
+
+  override def scalacOptions = super.scalacOptions() ++ Seq(
+    "-unchecked",
     "-deprecation",
+    "-language:reflectiveCalls",
     "-feature",
-    "-Xcheckinit"
+    "-Xcheckinit",
+    "-Xfatal-warnings",
+    "-Ywarn-dead-code",
+    "-Ywarn-unused",
+    "-Ymacro-annotations"
   )
 
-  def ivyDeps = Agg(
-    ivy"org.chipsalliance::chisel:$chiselVersion"
-  )
+  override def ivyDeps = super.ivyDeps() ++ Agg(chiselIvy)
 
-  def scalacPluginIvyDeps = Agg(
-    ivy"org.chipsalliance:::chisel-plugin:$chiselVersion"
-  )
+  override def scalacPluginIvyDeps = super.scalacPluginIvyDeps() ++ Agg(chiselPluginIvy)
+}
 
+trait HasChiselTest extends HasChisel {
   object test extends ScalaTests with TestModule.ScalaTest {
-    def ivyDeps = super.ivyDeps() ++ Agg(
-      ivy"edu.berkeley.cs::chiseltest:$chiseltestVersion"
-    )
+    def ivyDeps = super.ivyDeps() ++ Agg(chiselTestIvy)
   }
 }
