@@ -3,7 +3,7 @@ import scalalib._
 
 val defaultScalaVersion = "2.13.12"
 
-val chiselVersion     = "6.0.0-RC1"
+val chiselVersion     = "5.1.0"
 val chiseltestVersion = "5.0.2"
 
 val chiselIvy       = ivy"org.chipsalliance::chisel:$chiselVersion"
