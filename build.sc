@@ -1,20 +1,24 @@
 import mill._
 import scalalib._
+// support BSP
+import mill.bsp._
 
 val defaultScalaVersion = "2.13.12"
-
-val chiselVersion     = "5.1.0"
-val chiseltestVersion = "5.0.2"
+val chiselVersion       = "6.0.0"
+val scalatestVersion    = "3.2.16"
 
 val chiselIvy       = ivy"org.chipsalliance::chisel:$chiselVersion"
 val chiselPluginIvy = ivy"org.chipsalliance:::chisel-plugin:$chiselVersion"
-val chiseltestIvy   = ivy"edu.berkeley.cs::chiseltest:$chiseltestVersion"
+val scalatestIvy    = ivy"org.scalatest::scalatest::$scalatestVersion"
 
-object %NAME% extends HasChiselTest with scalafmt.ScalafmtModule {
+object %NAME% extends HasChisel with scalafmt.ScalafmtModule {
   override def millSourcePath = os.pwd / "hdl" / "chisel"
   override def moduleDeps = super.moduleDeps ++ Seq(
     // deps
   )
+  object test extends ScalaTests with TestModule.ScalaTest {
+    override def ivyDeps = super.ivyDeps() ++ Agg(scalatestIvy)
+  }
 }
 
 trait HasChisel extends ScalaModule {
@@ -35,10 +39,4 @@ trait HasChisel extends ScalaModule {
   override def ivyDeps = super.ivyDeps() ++ Agg(chiselIvy)
 
   override def scalacPluginIvyDeps = super.scalacPluginIvyDeps() ++ Agg(chiselPluginIvy)
-}
-
-trait HasChiselTest extends HasChisel {
-  object test extends ScalaTests with TestModule.ScalaTest {
-    def ivyDeps = super.ivyDeps() ++ Agg(chiseltestIvy)
-  }
 }
