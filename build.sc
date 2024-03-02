@@ -4,7 +4,7 @@ import scalalib._
 import mill.bsp._
 
 val defaultScalaVersion = "2.13.12"
-val chiselVersion       = "6.0.0"
+val chiselVersion       = "6.1.0"
 val scalatestVersion    = "3.2.16"
 
 val chiselIvy       = ivy"org.chipsalliance::chisel:$chiselVersion"
