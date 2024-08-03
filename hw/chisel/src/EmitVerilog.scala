@@ -7,7 +7,7 @@ object EmitVerilog {
   def main(args: Array[String]): Unit = {
     ChiselStage.emitSystemVerilogFile(
       gen = new Foo(),
-      args = Array("--target-dir", "rtl"),
+      args = Array("--target-dir", "hw/sv/gen"),
       firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info")
     )
   }

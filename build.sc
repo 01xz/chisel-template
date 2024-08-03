@@ -4,15 +4,15 @@ import scalalib._
 import mill.bsp._
 
 val defaultScalaVersion = "2.13.12"
-val chiselVersion       = "6.1.0"
-val scalatestVersion    = "3.2.16"
+val chiselVersion       = "6.5.0"
+val scalatestVersion    = "3.2.19"
 
 val chiselIvy       = ivy"org.chipsalliance::chisel:$chiselVersion"
 val chiselPluginIvy = ivy"org.chipsalliance:::chisel-plugin:$chiselVersion"
 val scalatestIvy    = ivy"org.scalatest::scalatest::$scalatestVersion"
 
 object %NAME% extends HasChisel with scalafmt.ScalafmtModule {
-  override def millSourcePath = os.pwd / "hdl" / "chisel"
+  override def millSourcePath = os.pwd / "hw" / "chisel"
   override def moduleDeps = super.moduleDeps ++ Seq(
     // deps
   )
